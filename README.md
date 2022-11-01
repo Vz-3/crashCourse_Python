@@ -1,1 +1,1 @@
-# crashCourse_Python
+# Day one:[Going back to the fundamentals : list comprehension and slicing]
