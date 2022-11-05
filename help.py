@@ -17,3 +17,9 @@ def datatypes():
     print("Tuples")
     print("Dictionaries")
     print("Sets")
+def styling():
+    print("PEP 8 - Style Guide for Python Code")
+    print("write code that is easy to read")
+    print("indentation - tabs that are converted in 4 spaces")
+    print("line length - 79 characters; commennt length - 72 characters")
+    
