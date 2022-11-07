@@ -1,17 +1,18 @@
-from os import remove
-import utils
+from os import *
+#from help import variable, datatypes, styling
+import utils as u
 
 #All covered topics in day one
 def testDayOne():
     print('Hello World!')
-    utils.line()
-    utils.f_string('Juu', 'Roku')
-    utils.num
+    u.line()
+    u.f_string('Juu', 'Roku')
+    u.num
     #The Zen of Python - 20 rules by Tim Peters
     import this
-    utils.line()
+    u.line()
     list()
-    utils.line()
+    u.line()
 
 def testDayTwo():
     """This is a docstring for documentation"""
@@ -19,6 +20,13 @@ def testDayTwo():
     ifin()
     dict()
     loopAndInput()
+
+def testDayThree():
+    method()
+    classes()
+    filed()
+    exceptions()
+    testingCode()
 
 def list():
     Tanks_OW = ['D.Va', 'Orisa', 'Sigma', 'Reinhardt', 'Roadhog', 'Winston', 'Wrecking Ball', 'Zarya']
@@ -97,5 +105,146 @@ def loopAndInput():
     while message != 'leave':
         message = input("Enter 'leave' to exit: ")
         print(message)
+        
+def method():    
+    def skill(duration, cooldown=3):
+        print("Applying {duration} seconds followed by a {cooldown} cooldown")
+        #keyword arguments: skill(cooldown=10, duration=5)
 
-testDayTwo()
+    def damageCalculation(heroName, enemy, damage=0, damageType="physical"):
+        print(f"{heroName} deals {damage} {damageType} damage to {enemy}")
+        calculatedDamage = (damage * 1.5)//2
+        return calculatedDamage
+    #optional parameter - def damageCalculation(heroName, enemy, damage=0, damageType='') or None
+
+    #slice notation for sending copy of list - skill(durationList[:])
+    
+    #arbitrary number of arguments
+    def enemiesCount(*enemy):
+        for enemies in enemy:
+            print(enemy)
+    #arbitrary number of keyword arguments
+    def user_profile(blizardTag, userLevel, **kwargs):
+        kwargs['blizardTag'] = blizardTag
+        kwargs['userLevel'] = userLevel
+        return kwargs
+    #thisUser = user_profile(Vzzz#6201, 396, region='NA', role='DPS', hero='Genji')
+
+def classes():
+    class OverwatchHero():
+        def __init__(self, heroName, heroRole, heroDamage, heroUlt):
+            self.heroName = heroName
+            self.heroRole = heroRole
+            self.heroDamage = heroDamage
+            self.heroUlt = heroUlt
+        def heroDescription(self):
+            print(f"{self.heroName} is a {self.heroRole} with {self.heroDamage} damage and {self.heroUlt} ultimate.")
+        def heroUltimate(self):
+            print(f"{self.heroName}'s ultimate is {self.heroUlt}.")
+
+    class OverwatchTank(OverwatchHero):
+        def __init__(self, heroName, heroRole, heroDamage, heroUlt, heroArmor):
+            super().__init__(heroName, heroRole, heroDamage, heroUlt)
+            self.heroArmor = heroArmor
+            self.ultCharge = 0 #
+        def heroDescription(self):
+            print(f"{self.heroName} is a {self.heroRole} with {self.heroDamage} damage, {self.heroUlt} ultimate, and {self.heroArmor} armor.")
+        def heroUltimate(self):
+            print(f"{self.heroName}'s ultimate is {self.heroUlt}.")
+
+    class OverwatchHealer(OverwatchHero):
+        def __init__(self, heroName, heroRole, heroDamage, heroUlt, heroHealing):
+            super().__init__(heroName, heroRole, heroDamage, heroUlt)
+            self.heroHealing = heroHealing
+        def heroDescription(self):
+            print(f"{self.heroName} is a {self.heroRole} with {self.heroDamage} damage, {self.heroUlt} ultimate, and {self.heroHealing} healing.")
+        def heroUltimate(self):
+            print(f"{self.heroName}'s ultimate is {self.heroUlt}.")
+
+    class OverwatchDPS(OverwatchHero):
+        def __init__(self, heroName, heroRole, heroDamage, heroUlt, heroSpeed):
+            super().__init__(heroName, heroRole, heroDamage, heroUlt)
+            self.heroSpeed = heroSpeed
+        def heroDescription(self):
+            print(f"{self.heroName} is a {self.heroRole} with {self.heroDamage} damage, {self.heroUlt} ultimate, and {self.heroSpeed} speed.")
+        def heroUltimate(self):
+            print(f"{self.heroName}'s ultimate is {self.heroUlt}.")
+        #instances as attributes - self.gameChar = OverwatchHero('Genji', 'DPS', 25, 'Dragonblade')
+
+def filed():
+    """reading from file"""
+    #with is a keyword that closes the file when it is no longer needed
+    try:
+        with open('test.txt') as file: #looks at the location of 'file'
+            contents = file.read()
+            print(contents.rstrip()) #rstrip() removes the extra line
+    except FileNotFoundError:
+        print("File not found.")
+    else:
+        print(contents)
+    finally:
+        print("This is the end of the program.")
+
+    def FilePath():
+        with open('subFolderUnderThisDirectory/test.txt') as file:
+            contents = file.read()
+            print(contents.rstrip())
+    
+    def AbsoluteFilePath():
+        file_path = 'C:/Users/V/Documents/crashCoursePython/test.txt' #for backlashes, use double backslashes 'C:\\Users\\V\\Documents\\crashCoursePython\\test.txt'
+        with open(file_path) as file:
+            contents = file.read()
+            print(contents.rstrip())
+
+    def storeDataInList():
+        with open('test.txt') as file:
+            lines = file.readlines() #readlines stores the lines in a list
+        for line in lines:
+            print(line.rstrip())
+
+    #replace
+    text = "This is the end"
+    text.replace('end', 'beginning')
+
+    """writing to file"""
+    with open('test.txt', 'w') as file: #w - write, r - read, a - append mode, r+ read and write, read-only by default
+        file.write("This is the end.")
+
+def exceptions():
+    try:
+        print(5/0)
+    except ZeroDivisionError:
+        print("Zero doesn't exist")
+    else:
+        print("This is the end of the program.") #additional code after succesful try block
+
+def storingData():
+    def json():
+        import json
+        healingInThousands = [6, 4, 7, 14, 12, 10]
+        filename = 'stats.json'
+        with open(filename, 'w') as file:
+            json.dump(healingInThousands, file)
+        
+        with open(filename) as file:
+            healingInThousands = json.load(file)
+
+def testingCode():
+    import unittest
+    class RandomTestCase(unittest.TestCase):
+        def test(self):
+            self.assertEqual(1, 1)
+
+    if __name__ == '__main__':
+        unittest.main()
+
+    def listOfCommonAssert(self, x, y, item):
+        self.assertEqual(x, y) #x == y
+        self.assertNotEqual(x, y) #x != y
+        self.assertTrue(x) #x is True
+        self.assertFalse(x) #x is False
+        self.assertIn(item, list) #item in list
+        self.assertNotIn(item, list) #item not in list
+
+    def setUp(self): #multiple responses ; not clear yet
+        self.hero = classes().OverwatchHero('Genji', 'DPS', 25, 'Dragonblade')
